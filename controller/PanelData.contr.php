@@ -22,16 +22,18 @@ class PanelData extends GrabDataModel{
       case 'dailysale':
       $dbCat = $GrabDataModel->GrabDataWithDate('sales', $date);
       if (empty($dbCat)) {
-          echo <<<ECHO
-            <tr>
-            <td></td>
-            <td>Dziś nie wprowadziłeś sprzedaży</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-          ECHO;
+          // echo <<<ECHO
+          //   <tr>
+          //   <td></td>
+          //   <td>Dziś nie wprowadziłeś sprzedaży</td>
+          //   <td></td>
+          //   <td></td>
+          //   <td></td>
+          //   <td></td>
+          //   </tr>
+          // ECHO;
+          require_once "../view/infoView.view.php";
+          InfoView::InfoMessage('info', 'Dziś nie wprowadziłeś sprzedaży');
       }
       else {
         $i=1;

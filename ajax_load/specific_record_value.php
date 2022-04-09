@@ -11,8 +11,6 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
       require "../model/GrabDataModel.model.php";
       require "../controller/PanelData.contr.php";
       echo PanelData::SpecificRecord($_GET['record'], $_GET['table'], $_GET['id']);
-      // $row = PanelData::SpecificRecord($_GET['record'], $_GET['table'], $_GET['id']);
-      // echo $row[$_GET['record']];
     }
   }
   else {

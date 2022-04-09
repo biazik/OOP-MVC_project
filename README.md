@@ -1,4 +1,4 @@
 # oop_project
- Witryna do zarządzania serwisem GSM
+ Pierwszy projekt oparty o OOP i MVC
 
- Projekt oparty o wzorzec projektowy MVC, którego zadaniem jest ułatwienie obsługi serwisów/sklepów GSM. 
+Zadaniem projektu jest ułatwienie obsługi serwisów/komisów GSM. 

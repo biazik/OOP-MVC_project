@@ -10,7 +10,7 @@ class InfoView{
         break;
       case 'info':
         $infoType="info";
-        $infoIcon="fas fa-ban";
+        $infoIcon="fas fa-info";
         $infoHeader="Informacja";
         break;
       case 'success':
