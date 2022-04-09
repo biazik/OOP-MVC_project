@@ -5,7 +5,7 @@
       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
       <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
     </div>
-    <div class="input-group date" onchange="jsDateSell(this)" id="daily_date" style="width:25%;" data-target-input="nearest">
+   <div class="input-group date" id="daily_date" onchange="jsDateSell(this)" style="width:25%;" data-target-input="nearest">
       <input type="text" id="daily_date" name="daily_date" style="margin-left:25px;" class="form-control datetimepicker-input" data-target="#daily_date" value="<?php echo date('d')."/".date('m')."/".date('Y'); ?>"/>
       <div class="input-group-append" data-target="#daily_date" data-toggle="datetimepicker">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
