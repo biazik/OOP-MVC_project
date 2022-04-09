@@ -8,13 +8,19 @@ class PanelData extends GrabDataModel{
       echo "<option value='$value[id]'>$value[name]</option>";
     }
   }
+
+  public static function SpecificRecord($record, $table, $id){
+    $GrabDataModel = new GrabDataModel;
+    $echo =  $GrabDataModel->GrabSpecificRecord($record, $table, $id);
+    echo $echo[$record];
+  }
   
   public static function TableDataWithDate($date, $panel){
     $GrabDataModel = new GrabDataModel;
     
     switch ($panel) {
       case 'dailysale':
-      $dbCat = $GrabDataModel->GrabDataWithDate('sales','2022-03-21');
+      $dbCat = $GrabDataModel->GrabDataWithDate('sales', $date);
       if (empty($dbCat)) {
           echo <<<ECHO
             <tr>
@@ -36,11 +42,9 @@ class PanelData extends GrabDataModel{
             <tr>
               <th style="width: 1%;">No.</th>
               <th>Produkt</th>
-              <th>Opis</th>
               <th>Cena zakupu</th>
               <th>Cena sprzedaży</th>
               <th>Zysk</th>
-              <th style="text-align: right">Operacje</th>
             </tr>
             </thead>
             <tbody>
@@ -58,14 +62,9 @@ class PanelData extends GrabDataModel{
             <tr>
             <td>$i</td>
             <td>$value[name]</td>
-            <td><form action="" method="post" class="moreinfo"><input type="hidden" name="desc" value="$value[description]"/><button type="submit" class="btn btn-tool"><i class="fas fa-eye"></i></button></form></td>
             <td>$value[buy_price]zł</td>
             <td>$value[sell_price]zł</td>
             <td class="text-success">$earn zł <i class="$icon"></i></td>
-            <td style="text-align: right">
-              <button type="button" class="btn btn-tool"><i class="fas fa-pen"></i></button>
-              <button type="button" class="btn btn-tool"><i class="fas fa-trash"></i></button>
-            </td>
             </tr>
           ECHO;
           $i++;
@@ -76,8 +75,7 @@ class PanelData extends GrabDataModel{
             <th></th>
             <th>Zysk dzienny:</th>
             <th class="text-success">$daily_earn zł</th>
-            <td></td>
-            <td></td>
+            <th></th>
             <td></td>
           </tr>
           </table>

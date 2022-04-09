@@ -7,11 +7,12 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
       echo "0";
     }
     else {
-      $conn = new mysqli("localhost", "root", "", "combo_gsm");
-      $sql = "SELECT `$_GET[record]` FROM `$_GET[table]` WHERE id=$_GET[id]";
-      $result = $conn->query($sql);
-      $row = $result->fetch_assoc();
-      echo $row[$_GET['record']];
+      require "../includes/dbh.inc.php";
+      require "../model/GrabDataModel.model.php";
+      require "../controller/PanelData.contr.php";
+      echo PanelData::SpecificRecord($_GET['record'], $_GET['table'], $_GET['id']);
+      // $row = PanelData::SpecificRecord($_GET['record'], $_GET['table'], $_GET['id']);
+      // echo $row[$_GET['record']];
     }
   }
   else {

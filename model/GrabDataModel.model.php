@@ -16,6 +16,13 @@ class GrabDataModel extends Dbh{
     $_SESSION['userData'] = $data;
   }
 
+  protected function GrabSpecificRecord($record, $table, $id){
+    $sql="SELECT $record FROM $table WHERE id=$id";
+    $stmt = $this->connect()->query($sql);
+    $data = $stmt->fetch();
+    return $data;
+  }
+
   protected function GrabDataWithDate($data, $date){
     switch ($data) {
       case 'sales':
