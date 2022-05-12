@@ -50,6 +50,19 @@ class PanelInsert{
       exit();
     }
   }
+  
+  public function InsertDeposit($description, $value){
+    $array = array(
+      "description" => $description,
+      "value" => $value
+    );
+    $insert = new InsertDataModel('refund', $array);
+    $return = $insert->userReturn();
+    $out['type']=$return['type'];
+    $out['description']=$return['description'];
+    return $out;
+    exit();
+  }
 
   function __destruct() {
   }

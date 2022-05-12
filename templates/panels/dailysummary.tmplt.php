@@ -11,24 +11,20 @@
     <table class="table table-striped">
       <tbody>
         <tr>
+          <td>Odjęcia z kasy</td>
+          <td style="text-align: right" class="text-danger"><?php PanelData::DaySum('refunds', Date("Y"), Date("m"), Date("d"))?></td>
+        </tr>
+        <tr>
           <td>Zysk dzienny</td>
-          <td style="text-align: right" class="text-success">69 zł</td>
+          <td style="text-align: right" class="text-success"><?php PanelData::DaySum('earnings', Date("Y"), Date("m"), Date("d"))?></td>
         </tr>
         <tr>
           <td>Pieniędzy w kasie</td>
-          <td style="text-align: right" class="text-success">595 zł</td>
+          <td style="text-align: right" class="text-success"><?php PanelData::DaySum('inCash', Date("Y"), Date("m"), Date("d"))?></td>
         </tr>
         <tr>
           <td>Sprzedaż kartą</td>
-          <td style="text-align: right" class="text-success">50 zł</td>
-        </tr>
-        <tr>
-          <td>Zwroty</td>
-          <td style="text-align: right" class="text-danger">40 zł</td>
-        </tr>
-        <tr>
-          <td>Depozyt</td>
-          <td style="text-align: right" class="text-danger">0 zł</td>
+          <td style="text-align: right" class="text-success"><?php PanelData::DaySum('card', Date("Y"), Date("m"), Date("d"))?></td>
         </tr>
       </tbody>
     </table>

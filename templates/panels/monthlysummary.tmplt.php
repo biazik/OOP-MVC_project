@@ -12,19 +12,19 @@
       <tbody>
         <tr>
           <td>Zysk miesięczny</td>
-          <td style="text-align: right"><span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 21%</span> 8867 zł</td>
+          <td style="text-align: right" class="text-success"><?php PanelData::MonthSum('Income', date("Y"), date("m"))?></td>
+        </tr>
+        <tr>
+          <td>Dochód z karty</td>
+          <td style="text-align: right" class="text-success"><?php PanelData::MonthSum('Card', date("Y"), date("m"))?></td>
         </tr>
         <tr>
           <td>Zakup miesięczny</td>
-          <td style="text-align: right">19203 zł</td>
+          <td style="text-align: right" class="text-info"><?php PanelData::MonthSum('Buy', date("Y"), date("m"))?></td>
         </tr>
         <tr>
           <td>Sprzedaż miesięczna</td>
-          <td style="text-align: right">28070 zł</td>
-        </tr>
-        <tr>
-          <td>Premia dla pracownika</td>
-          <td style="text-align: right"><span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 8%</span>186,7 zł</td>
+          <td style="text-align: right" class="text-info"><?php PanelData::MonthSum('Sell', date("Y"), date("m"))?></td>
         </tr>
       </tbody>
     </table>

@@ -55,6 +55,10 @@ class InsertDataModel extends Dbh{
       $this->CheckData('repairs',$array);
         break;
 
+      case 'refund':
+      $this->CheckData('refund',$array);
+        break;
+
       default:
         // do nothing
         break;
@@ -91,6 +95,10 @@ class InsertDataModel extends Dbh{
       }
         break;
 
+      case 'refund':
+          $this->InsertData('logsrefund', $data);
+        break;
+
       default:
         // do nothing
         break;
@@ -123,8 +131,18 @@ class InsertDataModel extends Dbh{
       }
         break;
 
+      case 'logsrefund':
+        $sql = "INSERT INTO logs (shop_id, user_id, description, refund_price, log_id) VALUES (?,?,?,?,?)";
+        if ($this->connect()->prepare($sql)->execute([$_SESSION['userData']['shop_id'], $_SESSION['userData']['id'], $data['description'], $data['value'], "4"])) {
+          $this->return('success');
+        }
+        else {
+          $this->return('warning');
+        }
+        break;
+
       default:
-        // do nothing
+        $this->return('error');
         break;
     }
   }
