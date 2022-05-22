@@ -82,7 +82,6 @@ if (!isset($_SESSION['userRole'])) {
         </div>
       </div>
       <!-- /.error-page -->
-
     </section>
     <!-- /.content -->
   </div>

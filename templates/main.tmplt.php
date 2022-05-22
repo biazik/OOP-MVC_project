@@ -9,35 +9,12 @@ $MainView = New MainView($data);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font, icons, adminlte css, my css -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="dist/css/myself.css">
-  <!-- jquery, bootstrap, adminlte js -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="dist/js/adminlte.min.js"></script>
-  <!-- Added by myself -->
-  <!-- Moment -->
-  <script src="plugins/moment/moment-with-locales.min.js"></script>
-  <!-- Tempusdominus Bootstrap-->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!-- Selectize.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-  <!-- jquery-validation -->
-  <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
-  <script src="plugins/jquery-validation/additional-methods.min.js"></script>
-  <!-- jquery-mask-plugin -->
-  <script src="plugins/mask_plugin/dist/jquery.mask.min.js"></script>
 </head>
 
 <!-- Preloader -->
-<!-- <div class="preloader flex-column justify-content-center align-items-center">
+<div class="preloader flex-column justify-content-center align-items-center">
   <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-</div> -->
+</div>
 
 <body class="hold-transition sidebar-mini sidebar-collapse dark-mode">
 <div class="wrapper">
@@ -66,17 +43,22 @@ $MainView = New MainView($data);
 
 <!-- Sidebar -->
 <?php
-$MainView->showMenu();
+$MainView->ShowMenu();
  ?>
 
 <!-- Content -->
 <?php
-$MainView->showContent();
+if (isset($_GET['requestedContent'])) {
+  $MainView->RequestedContent($_GET['requestedContent']);
+}
+else{
+  $MainView->ShowContent();
+}
 ?>
 
 <!-- Footer -->
 <?php
-$MainView->showFooter();
+$MainView->ShowFooter();
 ?>
 
   <aside class="control-sidebar control-sidebar-dark">

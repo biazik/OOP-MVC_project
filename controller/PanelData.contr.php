@@ -67,6 +67,57 @@ class PanelData extends GrabDataModel{
       }
         break;
 
+      case 'dailysaleDetailed':
+      $dbCat = $GrabDataModel->GrabDataWithDate('sales', $date);
+      if (empty($dbCat)) {
+          require_once "../view/infoView.view.php";
+          InfoView::InfoMessage('info', 'W tym dniu nie była prowadzona sprzedaż');
+      }
+      else {
+        $i=1;
+        echo <<<ECHO
+          <table class="table table-striped table-valign-middle">
+            <thead>
+            <tr>
+              <th style="width: 1%;">No.</th>
+              <th>Produkt</th>
+              <th>Opis</th>
+              <th>Cena zakupu</th>
+              <th>Cena sprzedaży</th>
+              <th>Zysk</th>
+              <th>Operacje</th>
+            </tr>
+            </thead>
+            <tbody>
+        ECHO;
+        foreach ($dbCat as $value) {
+          if ($value['paymentName'] == "Gotówka") {
+            $icon = "fas fa-coins";
+          }
+          if ($value['paymentName'] == "Karta") {
+            $icon = "fas fa-credit-card";
+          }
+          $earn = $value['sell_price']-$value['buy_price'];
+          echo <<<ECHO
+            <tr>
+            <td>$i</td>
+            <td>$value[name]</td>
+            <td>$value[description]</td>
+            <td>$value[buy_price]zł</td>
+            <td>$value[sell_price]zł</td>
+            <td class="text-success">$earn zł <i class="$icon"></i></td>
+            <td><button class="btn btn-danger" onclick="deleterecord($value[id])"><i class="fas fa-trash" title="Usuń"></i></button>
+            <button class="btn btn-link"> </button>
+            <button class="btn btn-success" onclick="editrecord($value[id])"><i class="fas fa-pen" title="Edytuj"></i></button></td>
+            </tr>
+
+          ECHO;
+          $i++;
+        }
+        echo "</tbody></table>";
+      }
+        break;
+
       default:
         // do nothing
         break;

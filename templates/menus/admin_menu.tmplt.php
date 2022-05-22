@@ -1,7 +1,13 @@
+<?php 
+if (isset($_POST['site'])) {
+  $_SESSION['userData']['requestedContent']="Device";
+  // echo "<script type='text/javascript'>alert('sadasd');</script>";
+}
+?>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="position:fixed;">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
+  <a href="?" class="brand-link">
     <img src="dist/img/AdminLTELogo1.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">ComboGSM</span>
   </a>
@@ -36,6 +42,43 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
+          <a href="?requestedContent=sales" class="nav-link">
+            <i class="nav-icon fas fa-cash-register"></i>
+            <p>
+              Sprzedaż
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="?requestedContent=repairs" class="nav-link">
+            <i class="nav-icon fas fa-wrench"></i>
+            <p>
+              Naprawy
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="?requestedContent=devices" class="nav-link">
+            <i class="nav-icon fas fa-mobile-alt"></i>
+            <p>
+              Urządzenia
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="?requestedContent=stats" class="nav-link">
+            <i class="nav-icon fas fa-chart-bar"></i>
+            <p>Statystyki</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="?requestedContent=logs" class="nav-link">
+            <i class="nav-icon fas fa-file"></i>
+            <!-- <i class="nav-icon fas fa-chart-bar"></i> -->
+            <p>Logi systemu<span class="badge badge-warning right">99+</span></p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
             <p>
@@ -45,55 +88,43 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="index.html" class="nav-link">
+              <a href="?requestedContent=settings_company" class="nav-link">
                 <i class="fas fa-cogs nav-icon"></i>
                 <p>Dane firmy</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="index2.html" class="nav-link">
+              <a href="?requestedContent=settings_users" class="nav-link">
                 <i class="fas fa-cogs nav-icon"></i>
                 <p>Użytkownicy</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="index3.html" class="nav-link">
+              <a href="?requestedContent=settings_categories" class="nav-link">
                 <i class="fas fa-cogs nav-icon"></i>
-                <p>Placówki</p>
+                <p>Kategorie</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="index3.html" class="nav-link">
+              <a href="?requestedContent=settings_pdf" class="nav-link">
                 <i class="fas fa-cogs nav-icon"></i>
                 <p>PDF Generator</p>
               </a>
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-file"></i>
-            <!-- <i class="nav-icon fas fa-chart-bar"></i> -->
-            <p>Logi systemu<span class="badge badge-warning right">99+</span></p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="../calendar.html" class="nav-link">
-            <i class="nav-icon fas fa-chart-bar"></i>
-            <p>Statystyki</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="../gallery.html" class="nav-link">
-            <i class="nav-icon fas fa-users"></i>
-            <p>
-              Kontakty
-            </p>
-          </a>
-        </li>
-
     </nav>
     <!-- /.sidebar-menu -->
   </div>
   <!-- /.sidebar -->
 </aside>
+<!-- Specific script for this site -->
+<script>
+  function ChangeSite() {
+    $.ajax({
+        type : "POST",
+        url: location.href,
+        data : {site:'Devices'}
+    });
+ }
+</script>
