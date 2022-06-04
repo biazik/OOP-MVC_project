@@ -9,11 +9,33 @@ class GrabDataModel extends Dbh{
     return $data;
   }
 
+  protected function GrabData_InnerJoin($data){
+    switch ($data) {
+      case 'users':
+          $sql = "SELECT users.id, users.username, roles.role FROM `users` INNER JOIN `roles` ON roles.id = users.role_id;";
+          $stmt = $this->connect()->query($sql);
+          $data = $stmt -> fetchAll();
+          return $data;
+        break;
+      
+      default:
+        # code...
+        break;
+    }
+  }
+
   protected function GrabUserData($data){
     $sql="SELECT * FROM users WHERE id=$data";
     $stmt = $this->connect()->query($sql);
     $data = $stmt->fetch();
     $_SESSION['userData'] = $data;
+  }
+
+  protected function GrabAllDataByYearAndMonth($table, $year, $month){
+    $sql="SELECT * FROM $table WHERE year(created_at)=$year AND month(created_at)=$month";
+    $stmt = $this->connect()->query($sql);
+    $data = $stmt->fetchAll();
+    return $data;
   }
 
   protected function GrabSpecificRecord($record, $table, $id){

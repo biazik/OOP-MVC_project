@@ -6,7 +6,7 @@ class LoginContr extends GrabDataModel{
     if (isset($data['login']) && isset($data['pwd'])) {
       $dbdata = $this->GrabData('users');
       foreach ($dbdata as $value) {
-        if ($value['username'] == $data['login'] && $value['password'] == $data['pwd']) {
+        if ($value['username'] == $data['login'] && password_verify($data['pwd'], $value['password'])) {
           switch ($value['role_id']) {
             case '1':
               $_SESSION['userRole']="User";

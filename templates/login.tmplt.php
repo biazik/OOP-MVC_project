@@ -33,13 +33,6 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Zapamiętaj mnie
-              </label>
-            </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
@@ -48,10 +41,6 @@
           <!-- /.col -->
         </div>
       </form>
-
-      <p class="mb-1">
-        <a href="forgot-password.html">Zapomniałem hasła</a>
-      </p>
     </div>
     <!-- /.card-body -->
   </div>

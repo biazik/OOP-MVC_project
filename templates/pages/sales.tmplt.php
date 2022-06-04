@@ -12,8 +12,8 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col">
-          <?php MainView::showPanel('pages_insert_sell'); ?>
-          <?php MainView::showPanel('pagesdailysale'); ?>
+          <?php MainView::showPanel('edit_sell'); ?>
+          <?php MainView::showPanel('dailysaledetailed'); ?>
         </div>
       </div>
     </div>

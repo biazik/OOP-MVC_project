@@ -54,6 +54,14 @@ if (!isset($_SESSION['userRole'])) {
             <div class="card-header">
               <h3 class="card-title">Kontakt z administratorem</h3>
             </div>
+            <div class="info">
+              <?php 
+              // var_dump($_POST);
+              if (isset($_POST['terms'])) {
+                InfoView::InfoMessage('info', 'Twoje zgłoszenie zostało wysłane do administratora. Czekaj cierpliwie na odpowiedź.');
+              }
+              ?>
+            </div>
             <!-- /.card-header -->
             <!-- form start -->
             <form method="post" id="adminForm">

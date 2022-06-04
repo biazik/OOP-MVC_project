@@ -1,8 +1,14 @@
+<?php 
+if (isset($_POST['site'])) {
+  $_SESSION['userData']['requestedContent']="Device";
+  // echo "<script type='text/javascript'>alert('sadasd');</script>";
+}
+?>
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="position:fixed;">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
-    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+  <a href="?" class="brand-link">
+    <img src="dist/img/AdminLTELogo1.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">ComboGSM</span>
   </a>
 
@@ -14,7 +20,7 @@
         <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Adam Maniek</a>
+        <span><?php echo $_SESSION['userData']['username']; ?></span>
       </div>
     </div>
 
@@ -36,139 +42,41 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-graduation-cap"></i>
+          <a href="?requestedContent=sales" class="nav-link">
+            <i class="nav-icon fas fa-cash-register"></i>
             <p>
-              Oceny
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="index.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Oceny cząstkowe</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="index2.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Oceny końcowe</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="index3.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Uczeń na tle klasy</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!-- Tak się dodaje item do menu po lewej -->
-        <!-- <li class="nav-item">
-          <a href="../widgets.html" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              Widgets
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
-        </li> -->
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-bar"></i>
-            <p>
-              Frekwencja
-              <i class="fas fa-angle-left right"></i>
-              <span class="badge badge-info right">6</span>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="../layout/top-nav.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <span class="badge badge-info right">6</span>
-                <p>Frekwencja ucznia</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="../layout/top-nav-sidebar.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Usprawiedliwenia</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="../layout/boxed.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Frekwencja na tle klasy</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon far fa-calendar"></i>
-            <p>
-              Terminarz
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="../charts/chartjs.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Sprawdziany</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="../charts/flot.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Zastępstwa</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="../charts/inline.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Zadania domowe</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="../calendar.html" class="nav-link">
-            <i class="nav-icon far fa-calendar-alt"></i>
-            <p>
-              Plan lekcji
-              <span class="badge badge-info right">2</span>
+              Sprzedaż
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="../gallery.html" class="nav-link">
-            <i class="nav-icon far fa-envelope"></i>
+          <a href="?requestedContent=repairs" class="nav-link">
+            <i class="nav-icon fas fa-wrench"></i>
             <p>
-              Kontakt z nauczycielami
+              Naprawy
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="../kanban.html" class="nav-link">
-            <i class="nav-icon far fa-address-card"></i>
+          <a href="?requestedContent=devices" class="nav-link">
+            <i class="nav-icon fas fa-mobile-alt"></i>
             <p>
-              Lista nauczycieli
+              Urządzenia
             </p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-school"></i>
-            <p>
-              Kontakt ze szkołą
-            </p>
-          </a>
-
     </nav>
     <!-- /.sidebar-menu -->
   </div>
   <!-- /.sidebar -->
 </aside>
+<!-- Specific script for this site -->
+<script>
+  function ChangeSite() {
+    $.ajax({
+        type : "POST",
+        url: location.href,
+        data : {site:'Devices'}
+    });
+ }
+</script>

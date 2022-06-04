@@ -1,12 +1,6 @@
-<!-- 
-Plan jak to zrobić:
-Input wyszukujący działa na jquery indexof,
-Tabelka z danymi generuje się onloadowo, a potem po onclicku,
-pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy nie, na onloadzie ładuje niezrobione
- -->
 <div class="card">
   <div class="card-header border-0">
-    <h3 class="card-title">Lista napraw</h3>
+    <h3 class="card-title">Lista urządzeń</h3>
     <div class="card-tools">
       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
       <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
@@ -15,14 +9,14 @@ pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy n
   <div id="infoView">
     <!-- This is PHP for repair form which can be triggered by edit button -->
   <?php
-    if (isset($_POST['edit_repair'])) {
+    if (isset($_POST['edit_device'])) {
       if (is_numeric($_POST['edit_id'])) {
         $class = new PanelUpdate;
         $arr = array(
         "id" => $_POST['edit_id'],
         "description" => $_POST['edit_description']
         );
-        $execute = $class->UpdateId($arr, 'repairs');
+        $execute = $class->UpdateId($arr, 'devices');
         InfoView::InfoMessage($execute['type'], $execute['description']);
       }
       else {
@@ -38,15 +32,15 @@ pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy n
         <input type="text" id="searchInTable" class="form-control" placeholder="Wpisz by wyszukać">
       </div>
       <div class="col-md-3">
-        <label class="float-right">Wybierz status naprawy</label>
+        <label class="float-right">Wybierz kategorię urządzenia</label>
         <br><br>
           <div class="form-check form-check-inline float-right">
-            <input class="form-check-input" style="display:none" type="radio" name="repair_type" id="Radio2" onclick="operations('load', '0'); bigLabel()" value="after_repair">
-            <label id="label2" class="form-check-label" for="Radio2">Po naprawie</label>
+            <input class="form-check-input" style="display:none" type="radio" name="device_type" id="Radio2" onclick="operations('load', '0'); bigLabel()" value="all">
+            <label id="label2" class="form-check-label" for="Radio2">Reszta urządzeń</label>
           </div>
           <div class="form-check form-check-inline float-right">
-            <input class="form-check-input" style="display:none" type="radio" name="repair_type" id="Radio1" onclick="operations('load', '0'); bigLabel()" value="in_repair" checked>
-            <label id="label1" class="form-check-label" for="Radio1">W naprawie</label>
+            <input class="form-check-input" style="display:none" type="radio" name="device_type" id="Radio1" onclick="operations('load', '0'); bigLabel()" value="phones" checked>
+            <label id="label1" class="form-check-label" for="Radio1">Telefony</label>
           </div>
       </div>
     </div>
@@ -54,20 +48,20 @@ pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy n
 
   </div>
   <div id="tablediv" class="card-body table-responsive p-0">
-    <?php PanelData::TableData('repairs');?>
+    <?php PanelData::TableData('devices');?>
   </div>
 </div>
 <!-- Specific script for this panel -->
 <!-- Make label text for radio big if selected -->
 <script>
   function bigLabel(){
-      if (document.querySelector('input[name="repair_type"]:checked').value == 'in_repair') {
+      if (document.querySelector('input[name="device_type"]:checked').value == 'phones') {
         document.getElementById("label1").classList.add('text-success');
       }
       else{
         document.getElementById("label1").classList.remove('text-success');
       }
-      if (document.querySelector('input[name="repair_type"]:checked').value == 'after_repair') {
+      if (document.querySelector('input[name="device_type"]:checked').value == 'all') {
         document.getElementById("label2").classList.add('text-success');
       }
       else{
@@ -75,13 +69,13 @@ pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy n
       }
   }
   $(document).ready(function(){
-      if (document.querySelector('input[name="repair_type"]:checked').value == 'in_repair') {
+      if (document.querySelector('input[name="device_type"]:checked').value == 'phones') {
         document.getElementById("label1").classList.add('text-success');
       }
       else{
         document.getElementById("label1").classList.remove('text-success');
       }
-      if (document.querySelector('input[name="repair_type"]:checked').value == 'after_repair') {
+      if (document.querySelector('input[name="device_type"]:checked').value == 'all') {
         document.getElementById("label2").classList.add('text-success');
       }
       else{
@@ -109,7 +103,7 @@ pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy n
       case 'delete':
         $.ajax({
           type: 'get',
-          url: 'ajax_load/repairs.php',
+          url: 'ajax_load/devices.php',
           data: { type: type, id: id },
           success: function(data) {
             document.getElementById('infoView').innerHTML = data;
@@ -120,39 +114,18 @@ pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy n
       case 'update':
         $.ajax({
           type: 'get',
-          url: 'ajax_load/repairs.php',
+          url: 'ajax_load/devices.php',
           data: { type: type, id: id },
           success: function(data) {
-            document.getElementById('edit_repair_div').innerHTML = data;
+            document.getElementById('edit_device_div').innerHTML = data;
            }
-        });
-        break;
-      case 'view':
-        $.ajax({
-          type: 'get',
-          url: 'ajax_load/repairs.php',
-          data: { type: type, id: id },
-          success: function(data) {
-            document.getElementById('infoView').innerHTML = data;
-           }
-        });
-        break;
-      case 'changeStatus':
-        $.ajax({
-          type: 'get',
-          url: 'ajax_load/repairs.php',
-          data: { type: type, id: id },
-          success: function(data) {
-            document.getElementById('infoView').innerHTML = data;
-            operations('load', '0');
-          }
         });
         break;
       case 'load':
         $.ajax({
           type: 'get',
-          url: 'ajax_load/repairs.php',
-          data: { type: type, data: document.querySelector('input[name="repair_type"]:checked').value },
+          url: 'ajax_load/devices.php',
+          data: { type: type, data: document.querySelector('input[name="device_type"]:checked').value },
           success: function(data) {
             document.getElementById('tablediv').innerHTML = data;
           }
@@ -163,16 +136,5 @@ pobiera ona dane z radio buttonów, które mówią czy to naprawy zrobione czy n
         alert("Unkown operation type, check your JavaScript on this page");
         break;
     }
-      // $.ajax({
-      //   type: 'get',
-      //   url: 'ajax_load/repairs.php',
-      //   data: { id: id },
-      //   success: function(data) {
-      //     document.getElementById('infoView').innerHTML = data;
-      //     setTimeout(function(){
-      //       location.reload();
-      //     }, 2500); 
-      //    }
-      // });
   }
 </script>

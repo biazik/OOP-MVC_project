@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Edycja pozycji</h3>
+    <h3 class="card-title" id="EditHref">Edycja pozycji</h3>
  </div>
   <!-- Show error -->
   <?php

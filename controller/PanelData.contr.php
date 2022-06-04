@@ -2,6 +2,8 @@
 class PanelData extends GrabDataModel{
 
   protected static $refundStatus = 0;
+  protected static $repairsCatStatus = 1;
+  protected static $devicesCatStatus = 1;
 
   public static function SelectOptions($data){
     $GrabDataModel = new GrabDataModel;
@@ -11,12 +13,250 @@ class PanelData extends GrabDataModel{
     }
   }
 
+  public static function SelectOptionsRole(){
+    $GrabDataModel = new GrabDataModel;
+    $dbCat = $GrabDataModel->GrabData('roles');
+    foreach ($dbCat as $value) {
+      echo "<option value='$value[id]'>$value[role], $value[description]</option>";
+    }
+  }
+
   public static function SpecificRecord($record, $table, $id){
     $GrabDataModel = new GrabDataModel;
     $echo =  $GrabDataModel->GrabSpecificRecord($record, $table, $id);
     echo $echo[$record];
   }
   
+  public static function RepairDataChange($data){
+    if ($data == 'in_repair') {
+      self::$repairsCatStatus = 1;
+    }
+    if ($data == 'after_repair') {
+      self::$repairsCatStatus = 2;
+    }
+  }
+  
+  public static function DeviceDataChange($data){
+    if ($data == 'phones') {
+      self::$devicesCatStatus = 1;
+    }
+    if ($data == 'all') {
+      self::$devicesCatStatus = 0;
+    }
+  }
+
+  public static function TableData($table){
+    $GrabDataModel = new GrabDataModel;
+
+    switch ($table) {
+      case 'repairs':
+        $dbCat = $GrabDataModel->GrabData('repairs');
+        if (empty($dbCat)) {
+          require_once "../view/infoView.view.php";
+          InfoView::InfoMessage('info', 'Brak danych');
+        }
+        else {
+        $i=1;
+        echo <<<ECHO
+          <table id="table" class="table table-striped table-valign-middle">
+            <thead>
+            <tr>
+              <th style="width: 2%">No.</th>
+              <th style="width: 12%">Nazwa urządzenia</th>
+              <th style="width: 7%">Data</th>
+              <th style="width: 10%">Numer telefonu</th>
+              <th style="width: 41%">Opis naprawy</th>
+              <th style="width: 10%">Kwota naprawy</th>
+              <th style="width: 15%">Operacje</th>
+            </tr>
+            </thead>
+            <tbody>
+        ECHO;
+        foreach ($dbCat as $value) {
+          if ($value['status_id'] == self::$repairsCatStatus) {
+            if ($value['status_id']==1) {
+              // $editStatus = '<button class="btn btn-success" onclick="operations(changeStatus, $value[id])"><i class="fas fa-check" title="Oznacz jako naprawione"></i></button>';
+              $editStatus = "<button class='btn btn-success' onclick=\"operations('changeStatus', $value[id])\"><i class='fas fa-angle-double-right' title='Oznacz jako naprawione'></i></button>";
+            }
+            else {
+              $editStatus = "<button class='btn btn-success' onclick=\"operations('changeStatus', $value[id])\"><i class='fas fa-angle-double-left' title='Oznacz jako nienaprawione'></i></button>";
+              // $editStatus = '<button class="btn btn-success" onclick="operations(changeStatus, $value[id])"><i class="fas fa-backspace" title="Oznacz jako naprawione"></i></button>';
+            }
+            echo <<<ECHO
+              <tr class="data">
+                <td>$i</td>
+                <td>$value[name]</td>
+                <td>$value[created_at]</td>
+                <td>$value[phone_number]</td>
+                <td>$value[description]</td>
+                <td>$value[price]</td>
+                <td>
+                $editStatus
+                <button class="btn btn-info" onclick="operations('view', $value[id])"><i class="fas fa-file" title="Podgląd PDF"></i></button>
+                <button class="btn btn-info" onclick="operations('update', $value[id]); window.location.href='#EditHref'"><i class="fas fa-pen" title="Edytuj"></i></button>
+                <button class="btn btn-danger" onclick="operations('delete', $value[id])"><i class="fas fa-trash" title="Usuń"></i></button>
+                </td>
+              </tr>
+            ECHO;
+            $i++;
+          }
+        }
+        echo "</tbody></table>";
+        }
+        break;
+      
+      case 'users':
+        $dbCat = $GrabDataModel->GrabData_InnerJoin('users');
+        if (empty($dbCat)) {
+          require_once "../view/infoView.view.php";
+          InfoView::InfoMessage('info', 'Brak danych');
+        }
+        else {
+        echo <<<ECHO
+          <table id="table" class="table table-striped table-valign-middle">
+            <thead>
+            <tr>
+              <th style="width: 5%">ID</th>
+              <th style="width: 30%">Nazwa użytkownika</th>
+              <th style="width: 30%">Rola użytkownika</th>
+              <th style="width: 15%">Operacje</th>
+            </tr>
+            </thead>
+            <tbody>
+        ECHO;
+        foreach ($dbCat as $value) {
+            echo <<<ECHO
+              <tr class="data">
+                <td>$value[id]</td>
+                <td>$value[username]</td>
+                <td>$value[role]</td>
+                <td>
+                <button class="btn btn-info" onclick="operations('update', $value[id]); window.location.href='#EditHref'"><i class="fas fa-pen" title="Edytuj"></i></button>
+                <button class="btn btn-danger" onclick="operations('delete', $value[id])"><i class="fas fa-trash" title="Usuń"></i></button>
+                </td>
+              </tr>
+            ECHO;
+        }
+        echo "</tbody></table>";
+        }
+        break;
+      
+      case 'devices':
+        $dbCat = $GrabDataModel->GrabData('devices');
+        if (empty($dbCat)) {
+          require_once "../view/infoView.view.php";
+          InfoView::InfoMessage('info', 'Brak danych');
+        }
+        else {
+        $i=1;
+        echo <<<ECHO
+          <table id="table" class="table table-striped table-valign-middle">
+            <thead>
+            <tr>
+              <th style="width: 2%">No.</th>
+              <th style="width: 12%">Nazwa urządzenia</th>
+              <th style="width: 41%">Opis dodatkowy</th>
+              <th style="width: 10%">Cena zakupu</th>
+              <th style="width: 15%">Operacje</th>
+            </tr>
+            </thead>
+            <tbody>
+        ECHO;
+        foreach ($dbCat as $value) {
+          switch (self::$devicesCatStatus) {
+            case '1':
+                if ($value['device_id'] == 1) {
+                  echo <<<ECHO
+                    <tr class="data">
+                      <td>$i</td>
+                      <td>$value[name]</td>
+                      <td>$value[description]</td>
+                      <td>$value[buy_price]</td>
+                      <td>
+                      <button class="btn btn-info" onclick="operations('view', $value[id])"><i class="fas fa-file" title="Podgląd PDF"></i></button>
+                      <button class="btn btn-info" onclick="operations('update', $value[id]); window.location.href='#EditHref'"><i class="fas fa-pen" title="Edytuj"></i></button>
+                      <button class="btn btn-danger" onclick="operations('delete', $value[id])"><i class="fas fa-trash" title="Usuń"></i></button>
+                      </td>
+                    </tr>
+                  ECHO;
+                  $i++;
+                }
+              break;
+
+            case '0':
+                if ($value['device_id'] == 2 OR $value['device_id'] == 3 OR $value['device_id'] == 4) {
+                  echo <<<ECHO
+                    <tr class="data">
+                      <td>$i</td>
+                      <td>$value[name]</td>
+                      <td>$value[description]</td>
+                      <td>$value[buy_price]</td>
+                      <td>
+                      <button class="btn btn-info" onclick="operations('view', $value[id])"><i class="fas fa-file" title="Podgląd PDF"></i></button>
+                      <button class="btn btn-info" onclick="operations('update', $value[id]); window.location.href='#EditHref'"><i class="fas fa-pen" title="Edytuj"></i></button>
+                      <button class="btn btn-danger" onclick="operations('delete', $value[id])"><i class="fas fa-trash" title="Usuń"></i></button>
+                      </td>
+                    </tr>
+                  ECHO;
+                  $i++;
+                }
+              break;
+            
+            default:
+              # code...
+              break;
+          }
+        }
+        echo "</tbody></table>";
+        }
+        break;
+      
+      case 'categories':
+        $dbCat = $GrabDataModel->GrabData('sale_categories');
+        if (empty($dbCat)) {
+          require_once "../view/infoView.view.php";
+          InfoView::InfoMessage('info', 'Brak danych');
+        }
+        else {
+        $i=1;
+        echo <<<ECHO
+          <table id="table" class="table table-striped table-valign-middle">
+            <thead>
+            <tr>
+              <th style="width: 12%">Nazwa kategorii</th>
+              <th style="width: 41%">Opis dodatkowy</th>
+              <th style="width: 10%">Cena zakupu</th>
+              <th style="width: 10%">Cena sprzedaży</th>
+              <th style="width: 15%">Operacje</th>
+            </tr>
+            </thead>
+            <tbody>
+        ECHO;
+        foreach ($dbCat as $value) {
+            echo <<<ECHO
+                <tr class="data">
+                  <td>$value[name]</td>
+                  <td>$value[description]</td>
+                  <td>$value[buy_price]</td>
+                  <td>$value[sell_price]</td>
+                  <td>
+                  <button class="btn btn-info" onclick="operations('update', $value[id]); window.location.href='#EditHref'"><i class="fas fa-pen" title="Edytuj"></i></button>
+                  <button class="btn btn-danger" onclick="operations('delete', $value[id])"><i class="fas fa-trash" title="Usuń"></i></button>
+                  </td>
+                </tr>
+              ECHO;
+
+        }
+        echo "</tbody></table>";
+        }
+        break;
+           
+      default:
+        // do nothing
+        break;
+    }
+  }
+
   public static function TableDataWithDate($date, $panel){
     $GrabDataModel = new GrabDataModel;
     
@@ -108,7 +348,7 @@ class PanelData extends GrabDataModel{
             <td class="text-success">$earn zł <i class="$icon"></i></td>
             <td><button class="btn btn-danger" onclick="deleterecord($value[id])"><i class="fas fa-trash" title="Usuń"></i></button>
             <button class="btn btn-link"> </button>
-            <button class="btn btn-success" onclick="editrecord($value[id])"><i class="fas fa-pen" title="Edytuj"></i></button></td>
+            <button class="btn btn-success" onclick="editrecord($value[id]); window.location.href='#EditHref'"><i class="fas fa-pen" title="Edytuj"></i></button></td>
             </tr>
 
           ECHO;

@@ -72,13 +72,6 @@ if (isset($_POST['site'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a href="?requestedContent=logs" class="nav-link">
-            <i class="nav-icon fas fa-file"></i>
-            <!-- <i class="nav-icon fas fa-chart-bar"></i> -->
-            <p>Logi systemu<span class="badge badge-warning right">99+</span></p>
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
             <p>
@@ -87,12 +80,6 @@ if (isset($_POST['site'])) {
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="?requestedContent=settings_company" class="nav-link">
-                <i class="fas fa-cogs nav-icon"></i>
-                <p>Dane firmy</p>
-              </a>
-            </li>
             <li class="nav-item">
               <a href="?requestedContent=settings_users" class="nav-link">
                 <i class="fas fa-cogs nav-icon"></i>
@@ -103,12 +90,6 @@ if (isset($_POST['site'])) {
               <a href="?requestedContent=settings_categories" class="nav-link">
                 <i class="fas fa-cogs nav-icon"></i>
                 <p>Kategorie</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="?requestedContent=settings_pdf" class="nav-link">
-                <i class="fas fa-cogs nav-icon"></i>
-                <p>PDF Generator</p>
               </a>
             </li>
           </ul>

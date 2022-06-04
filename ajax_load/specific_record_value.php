@@ -7,9 +7,10 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
       echo "0";
     }
     else {
-      require "../includes/dbh.inc.php";
-      require "../model/GrabDataModel.model.php";
-      require "../controller/PanelData.contr.php";
+      require "../includes/mvcAutoloader_ajax.php";
+      // require "../includes/dbh.inc.php";
+      // require "../model/GrabDataModel.model.php";
+      // require "../controller/PanelData.contr.php";
       echo PanelData::SpecificRecord($_GET['record'], $_GET['table'], $_GET['id']);
     }
   }

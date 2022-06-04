@@ -7,4 +7,9 @@ class AjaxGrabber extends GrabDataModel {
         return $data;
     }
 
+    public function ChartMonthlyIncome($year, $month){
+        $data = $this->GrabAllDataByYearAndMonth('sales', $year, $month);
+        return $data;
+    }
+
 }

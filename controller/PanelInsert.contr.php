@@ -50,6 +50,40 @@ class PanelInsert{
       exit();
     }
   }
+
+  public function InsertDevice($data){
+    if (is_numeric($data['device_id'])) {
+      $insert = new InsertDataModel('devices', $data);
+      $return = $insert->userReturn();
+      $out['type']=$return['type'];
+      $out['description']=$return['description'];
+      return $out;
+      exit();
+    }
+    else {
+      $out['type']="warning";
+      $out['description']="Wystąpił błąd. Sprawdź czy wszystko poprawnie wypełniłeś";
+      return $out;
+      exit();
+    }
+  }
+
+  public function InsertSellCategory($data){
+    if (is_numeric($data['buy_price']) && is_numeric($data['sell_price'])) {
+      $insert = new InsertDataModel('sale_category', $data);
+      $return = $insert->userReturn();
+      $out['type']=$return['type'];
+      $out['description']=$return['description'];
+      return $out;
+      exit();
+    }
+    else {
+      $out['type']="warning";
+      $out['description']="Wystąpił błąd. Sprawdź czy wszystko poprawnie wypełniłeś";
+      return $out;
+      exit();
+    }
+  }
   
   public function InsertDeposit($description, $value){
     $array = array(
@@ -62,6 +96,28 @@ class PanelInsert{
     $out['description']=$return['description'];
     return $out;
     exit();
+  }
+  
+  public function InsertUser($data){
+    $array = array(
+      "role" => $data['role'],
+      "username" => $data['username'],
+      "password" => $data['password']
+    );
+    if (strlen($data['role'])>0) {
+      $insert = new InsertDataModel('user', $array);
+      $return = $insert->userReturn();
+      $out['type']=$return['type'];
+      $out['description']=$return['description'];
+      return $out;
+      exit();
+    }
+    else {
+      $out['type']='warning';
+      $out['description']='Nie wybrano roli użytkownika';
+      return $out;
+      exit();
+    }
   }
 
   function __destruct() {

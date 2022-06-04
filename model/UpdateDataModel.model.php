@@ -42,6 +42,61 @@ class UpdateDataModel extends Dbh{
                     $this->return('warning');
                 }
                 break;
+
+            case 'sale_categories':
+                $sql = "UPDATE `sale_categories` SET `description` = '$data[description]', `buy_price` = '$data[buy_price]', `sell_price` = '$data[sell_price]' WHERE `id`='$data[id]'";
+                $execute = $this->connect()->query($sql);
+                if ($execute) {
+                    $this->return('success');
+                }
+                else {
+                    $this->return('warning');
+                }
+                break;
+
+            case 'repairs':
+                $sql = "UPDATE `repairs` SET `description` = '$data[description]' WHERE `id`='$data[id]'";
+                $execute = $this->connect()->query($sql);
+                if ($execute) {
+                    $this->return('success');
+                }
+                else {
+                    $this->return('warning');
+                }
+                break;
+
+            case 'devices':
+                $sql = "UPDATE `devices` SET `description` = '$data[description]' WHERE `id`='$data[id]'";
+                $execute = $this->connect()->query($sql);
+                if ($execute) {
+                    $this->return('success');
+                }
+                else {
+                    $this->return('warning');
+                }
+                break;
+
+            case 'users':
+                $sql = "UPDATE `users` SET `password` = '$data[password]', `username` = '$data[username]' WHERE `id`='$data[id]'";
+                $execute = $this->connect()->query($sql);
+                if ($execute) {
+                    $this->return('success');
+                }
+                else {
+                    $this->return('warning');
+                }
+                break;
+
+            case 'repair_status':
+                $sql = "UPDATE `repairs` SET `status_id` = '$data[status_id]' WHERE `id`='$data[id]'";
+                $execute = $this->connect()->query($sql);
+                if ($execute) {
+                    $this->return('success');
+                }
+                else {
+                    $this->return('warning');
+                }
+                break;
             
             default:
                 // do nothing

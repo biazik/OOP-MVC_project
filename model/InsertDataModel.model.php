@@ -14,6 +14,10 @@ class InsertDataModel extends Dbh{
         $this->out['type']="error";
         $this->out['description']="Rozpoznano naruszenie kodu.";
         break;
+      case 'errorUser':
+        $this->out['type']="error";
+        $this->out['description']="Taki użytkownik został już wprowadzony.";
+        break;
       case 'success':
         $this->out['type']="success";
         $this->out['description']="Poprawno dodano do bazy.";
@@ -55,8 +59,24 @@ class InsertDataModel extends Dbh{
       $this->CheckData('repairs',$array);
         break;
 
+      case 'devices':
+      $this->CheckData('devices',$array);
+        break;
+
       case 'refund':
       $this->CheckData('refund',$array);
+        break;
+
+      case 'logs':
+      $this->CheckData('logs',$array);
+        break;
+
+      case 'user':
+      $this->CheckData('user',$array);
+        break;
+
+      case 'sale_category':
+      $this->CheckData('sale_category',$array);
         break;
 
       default:
@@ -95,8 +115,57 @@ class InsertDataModel extends Dbh{
       }
         break;
 
+        case 'sale_category':
+          $this->InsertData('sale_categories', $data);
+        break;
+
+      case 'devices':
+      $di = $this->LastID('device_categories');
+      if ($data['device_id']<=$di['LastID']) {
+        $this->InsertData('devices', $data);
+      }
+      else {
+        $this->return('error');
+      }
+        break;
+
+      case 'logs':
+        $this->InsertData('logs', $data);
+        break;
+
       case 'refund':
           $this->InsertData('logsrefund', $data);
+        break;
+
+      case 'user':
+        if (strlen($data['password'])>=6) {
+          $di = $this->LastID('roles');
+          if ($data['role']<=$di['LastID']) {
+            
+            $userCheck = false;
+            $sql="SELECT `username` FROM users;";
+            $stmt = $this->connect()->query($sql);
+            $usernameCheck = $stmt->fetchAll();
+            foreach ($usernameCheck as $value) {
+              if ($data['username'] == $value['username']) {
+                $userCheck = true;
+              }
+            }
+            if ($userCheck == false) {
+              $data['password']=password_hash($data['password'], PASSWORD_ARGON2ID);
+              $this->InsertData('user', $data);
+            }
+            else {
+              $this->return('warning');
+            }
+          }
+          else {
+            $this->return('errorUser');
+          }
+        }
+        else {
+          $this->return('errorUser');
+        }
         break;
 
       default:
@@ -131,9 +200,44 @@ class InsertDataModel extends Dbh{
       }
         break;
 
+      case 'sale_categories':
+      $this->data = $data;
+      $sql = "INSERT INTO sale_categories (name, description, buy_price,	sell_price) VALUES (?,?,?,?)";
+      if ($this->connect()->prepare($sql)->execute([$data['name'], $data['description'], $data['buy_price'], $data['sell_price']])) {
+        $this->return('success');
+      }
+      else {
+        $this->return('warning');
+      }
+        break;
+
+      case 'devices':
+      $this->data = $data;
+      $sql = "INSERT INTO devices (shop_id, device_id, description, name, buy_price) VALUES (?,?,?,?,?)";
+      // $execute = $this->connect()->prepare($sql)->execute([$_SESSION['userData']['shop_id'], $data['device_id'], $data['description'], $data['phone_number'], $data['password'], $data['name'], $data['price'], date('Y-m-d')]);
+      if ($this->connect()->prepare($sql)->execute([$_SESSION['userData']['shop_id'], $data['device_id'], $data['description'], $data['name'], $data['buy_price']])) {
+        $last_id = $this->LastID('repairs');
+        $this->data['id']=$last_id['LastID'];
+        $this->return('success');
+      }
+      else {
+        $this->return('warning');
+      }
+        break;
+
       case 'logsrefund':
         $sql = "INSERT INTO logs (shop_id, user_id, description, refund_price, log_id) VALUES (?,?,?,?,?)";
         if ($this->connect()->prepare($sql)->execute([$_SESSION['userData']['shop_id'], $_SESSION['userData']['id'], $data['description'], $data['value'], "4"])) {
+          $this->return('success');
+        }
+        else {
+          $this->return('warning');
+        }
+        break;
+
+      case 'user':
+        $sql = "INSERT INTO users (role_id, shop_id, username, password) VALUES (?,?,?,?)";
+        if ($this->connect()->prepare($sql)->execute([$data['role'], $_SESSION['userData']['shop_id'], $data['username'], $data['password']])) {
           $this->return('success');
         }
         else {

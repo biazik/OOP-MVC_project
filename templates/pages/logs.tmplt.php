@@ -12,8 +12,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col">
-          <div id="edit_repair_div"></div>
-          <?php MainView::showPanel('repairs'); ?>
+          <?php MainView::showPanel('logs'); ?>
         </div>
       </div>
     </div>
